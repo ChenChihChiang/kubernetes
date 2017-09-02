@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx.nuwa.johncchen.me
+  labels:
+    app: nginx-pod
+spec:
+  containers:
+  - name: nginx-ct
+    image: nginx
+    ports:
+    - name: nginx-port
+      containerPort: 80

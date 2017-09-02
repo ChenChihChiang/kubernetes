@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: flask.nuwa.johncchen.me
+  labels:
+    app: flask-pod
+spec:
+  containers:
+  - name: flask-ct
+    image: chihchinag/flask
+    command: ["/bin/bash","-c"]
+    args: ["python3 /root/app.py"]
+    ports:
+    - name: flask-port
+      containerPort: 80
