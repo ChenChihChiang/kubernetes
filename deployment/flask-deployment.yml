@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flask-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: flask-pod
+    spec:
+      containers:
+      - name: flask-ct
+        image: chihchinag/flask
+        command: ["/bin/bash","-c"]
+        args: ["python3 /root/app.py"]
+        ports:
+        - name: flask-port
+          containerPort: 80
+        volumeMounts:
+        - mountPath: /ebs
+          name: ebsvolume
+      volumes:
+      - name: ebsvolume
+        awsElasticBlockStore:
+          volumeID: vol-01b64a5f066d20bb6
