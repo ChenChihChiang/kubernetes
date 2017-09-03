@@ -4,6 +4,8 @@ import os
 import subprocess
 import json
 import pymysql
+import time
+import datetime
 
 app = Flask(__name__)
 
@@ -42,6 +44,23 @@ def login():
   
     return redirect(url_for('time'))
 
+
+@app.route('/clear')
+def clear():
+
+    db = pymysql.connect("54.254.204.187","nuwa","nuWA88**","login_time")
+    cursor = db.cursor()
+    sql = """truncate login_time.login_time"""
+    try:
+        cursor.execute(sql)
+        db.commit()
+    except:
+        db.rollback()
+
+    db.close()
+    return redirect(url_for('time'))
+
+
 @app.route('/time')
 def time():
     
@@ -53,7 +72,6 @@ def time():
 
     data = cursor.fetchall()
     
-    os.system("rm -rf /root/templates/time.html") 
     f = open('/root/templates/time.html','w')
     
     for i in data:
@@ -81,6 +99,24 @@ def local():
     f.close()
     return render_template('local.html')
 
+@app.route('/addlocal')
+def addlocal():
+
+    result = os.popen('curl ipinfo.io')
+
+    ip =  json.load(result)
+
+    source = ip['ip']
+    
+    today = datetime.datetime.now()
+
+    filename =source + "_" + str(today)    
+
+    f = open('/root/%s.txt' % filename ,'w') 
+    f.close()
+
+    return redirect(url_for('local'))
+
 @app.route('/ebs')
 def ebs():
 
@@ -96,6 +132,26 @@ def ebs():
 
     f.close()
     return render_template('ebs.html')
+
+@app.route('/addebs')
+def addebs():
+
+    result = os.popen('curl ipinfo.io')
+
+    ip =  json.load(result)
+
+    source = ip['ip']
+
+    today = datetime.datetime.now()
+
+    filename =source + "_" + str(today)
+
+    f = open('/ebs/%s.txt' % filename ,'w')
+    f.close()
+
+    return redirect(url_for('ebs'))
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=80,threaded=True,debug=True)
