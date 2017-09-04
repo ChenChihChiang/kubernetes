@@ -11,16 +11,16 @@ spec:
     spec:
       containers:
       - name: flask-ct
-        image: chihchinag/flask
+        image: chihchinag/flask:4
         command: ["/bin/bash","-c"]
         args: ["python3 /root/app.py"]
         ports:
         - name: flask-port
           containerPort: 80
-        volumeMounts:
-        - mountPath: /ebs
-          name: ebsvolume
-      volumes:
-      - name: ebsvolume
-        awsElasticBlockStore:
-          volumeID: vol-01b64a5f066d20bb6
+        #volumeMounts:
+        #- mountPath: /ebs
+        #  name: ebsvolume
+      #volumes:
+      #- name: ebsvolume
+      #  awsElasticBlockStore:
+      #    volumeID: vol-01b64a5f066d20bb6

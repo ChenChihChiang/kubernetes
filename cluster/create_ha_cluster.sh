@@ -1,0 +1,1 @@
+kops create cluster --name=nuwa.johncchen.me --state=s3://nuwa-virginia --zones=us-east-1a,us-east-1c,us-east-1e --node-count=3 --node-size=t2.micro --master-size=t2.micro --dns-zone=nuwa.johncchen.me --master-zones=us-east-1a,us-east-1c,us-east-1e --yes
