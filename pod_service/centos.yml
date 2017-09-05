@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: centos6.nuwa.johncchen.me
+  labels:
+    app: centos6-pod
+spec:
+  containers:
+  - name: centos6-ct
+    image: centos:6
+    command: ["/bin/bash","-c"]
+    args: ["ping 127.0.0.1"]
+    ports:
+    - name: centos6-port
+      containerPort: 8080
