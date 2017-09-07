@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: 2ct.nuwa.johncchen.me
+  labels:
+    app: 2ct-pod
+spec:
+  containers:
+  - name: nginx-ct
+    image: nginx
+    ports:
+    - name: nginx-port
+      containerPort: 80
+  - name: flask8080-ct
+    image: chihchinag/flask8080
+    command: ["/bin/bash","-c"]
+    args: ["python3 /root/app.py"]
+    ports:
+    - name: flask8080-port
+      containerPort: 8080

@@ -9,7 +9,7 @@ spec:
   - name: centos6-ct
     image: centos:6
     command: ["/bin/bash","-c"]
-    args: ["ping 127.0.0.1"]
+    args: ["sleep 30000"]
     ports:
     - name: centos6-port
       containerPort: 8080
