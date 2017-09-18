@@ -8,7 +8,7 @@ spec:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 2
-      maxUnavailable: 2
+      maxUnavailable: 1
   minReadySeconds: 10
   template:
     metadata:
@@ -24,6 +24,12 @@ spec:
         ports:
         - name: flask-port
           containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: flask-port
+          initialDelaySeconds: 15
+          timeoutSeconds: 30
         #volumeMounts:
         #- mountPath: /ebs
         #  name: ebsvolume

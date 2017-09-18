@@ -24,6 +24,11 @@ spec:
         ports:
         - name: flask-port
           containerPort: 80
+        resources:
+          limits:
+            memory: "600Mi"
+          requests:
+            memory: "550Mi"
         #volumeMounts:
         #- mountPath: /ebs
         #  name: ebsvolume
