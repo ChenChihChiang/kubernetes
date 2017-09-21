@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: flask-deployment
 spec:
-  replicas: 4
+  replicas: 3 
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: flask-ct
-        image: chihchinag/flask:12
+        image: chihchinag/flask:20
         imagePullPolicy: Always
         command: ["/bin/bash","-c"]
         args: ["python3 /root/app.py"]

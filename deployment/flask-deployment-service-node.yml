@@ -6,6 +6,7 @@ spec:
   ports:
   - port: 80
     targetPort: flask-port
+    nodePort: 31111
     protocol: TCP
   selector:
     app: flask-pod
