@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: flask-deployment
+  name: flask-deployment1
 spec:
-  replicas: 3
+  replicas: 3 
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -13,16 +13,16 @@ spec:
   template:
     metadata:
       labels:
-        app: flask-pod
+        app: flask-pod1
     spec:
       containers:
       - name: flask-ct
-        image: chihchinag/flask:10
+        image: chihchinag/flask:11
         imagePullPolicy: Always
         command: ["/bin/bash","-c"]
         args: ["python3 /root/app.py"]
         ports:
-        - name: flask-port
+        - name: flask-port1
           containerPort: 80
         #volumeMounts:
         #- mountPath: /ebs

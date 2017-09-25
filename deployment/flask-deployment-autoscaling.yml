@@ -7,5 +7,5 @@ spec:
     kind: Deployment
     name: flask-deployment
   minReplicas: 2
-  maxReplicas: 40
+  maxReplicas: 10
   targetCPUUtilizationPercentage: 5
