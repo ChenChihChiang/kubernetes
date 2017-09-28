@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota
+  namespace: development
+spec:
+  hard:
+    cpu: "20"
+    memory: "50Gi"
+    persistentvolumeclaims: "10"
+    pods: "10"
+    replicationcontrollers: "20"
+    resourcequotas: "1"
+    secrets: "10"
+    services: "5"
