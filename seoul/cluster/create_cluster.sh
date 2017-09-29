@@ -1,1 +1,0 @@
-kops create cluster --name=seoul.nuwa.johncchen.me --state=s3://nuwa-seoul --zones=ap-northeast-2a,ap-northeast-2c --node-count=2 --node-size=t2.micro --master-size=t2.micro --dns-zone=nuwa.johncchen.me --yes
