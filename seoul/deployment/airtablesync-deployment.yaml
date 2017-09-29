@@ -1,0 +1,59 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: airtablesync-deployment
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 2
+  minReadySeconds: 30
+  template:
+    metadata:
+      labels:
+        app: otaadmin-pod
+    spec:
+      containers:
+      - name: otaadmin-container
+        image: nuwarobotics/otaadmin:latest
+        imagePullPolicy: Always
+        command:
+        - /bin/bash
+        - -c
+        - gunicorn -b :5000 -b unix:/tmp/gunicorn.sock -c config/gunicorn.py "ota:create_application()"
+        ports:
+        - name: otaadmin-port
+          containerPort: 5000
+        env:
+        - name: LANG
+          value: 'en_US.UTF-8'
+        - name: PYTHONUNBUFFERED
+          value: "True"
+        - name: PYTHONIOENCODING
+          value: utf-8
+        - name: SETTINGS_MODULE
+          value: ota.settings.local
+        - name: SECRET_KEY
+          value: secret_key
+        - name: CELERY_TIMEZONE
+          value: "Asia/Taipei"
+        - name: VERIFY_KEY
+          value: efjqfh3iufhoi4f3jf434opf
+        - name: OTA_RESOURCE_API
+          value: http://dev-api.nuwarobotics.com/v1/ota/
+        - name: NUWA_SSO
+          value: http://dev-nuwa-account.nuwarobotics.com/admin/login
+        - name: HOST
+          value: http://dev-fota-portal.nuwarobotics.com
+        - name: OTA_TWO_PHASE_API
+          value: http://dev-api.nuwarobotics.com/v1/ota/resource/twoPhaseCommit
+        livenessProbe:
+          tcpSocket:
+            port: 5000
+          initialDelaySeconds: 15
+          timeoutSeconds: 30
+      imagePullSecrets:
+      - name: regsecret
+

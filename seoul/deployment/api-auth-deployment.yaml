@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: api-auth-deployment
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 2
+  minReadySeconds: 30
+  template:
+    metadata:
+      labels:
+        app: api-auth-pod
+    spec:
+      containers:
+      - name: api-auth-container
+        image: nuwarobotics/api-auth:0.1.5-SNAPSHOT
+        imagePullPolicy: Always
+        ports:
+        - name: api-ota-port
+          containerPort: 5100
+        env:
+        - name: EXEC_ENV
+          value: dev
+        livenessProbe:
+          tcpSocket:
+            port: 5100
+          initialDelaySeconds: 15
+          timeoutSeconds: 30
+      imagePullSecrets:
+      - name: regsecret
+

@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flask-deployment
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: flask-pod
+    spec:
+      containers:
+      - name: flask-ct
+        image: chihchinag/flask:12
+        imagePullPolicy: Always
+        command: ["/bin/bash","-c"]
+        args: ["python3 /root/app.py"]
+        ports:
+        - name: flask-port
+          containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: flask-port
+          initialDelaySeconds: 15
+          timeoutSeconds: 30
+        #volumeMounts:
+        #- mountPath: /ebs
+        #  name: ebsvolume
+      #volumes:
+      #- name: ebsvolume
+      #  awsElasticBlockStore:
+      #    volumeID: vol-01b64a5f066d20bb6
